@@ -1,14 +1,25 @@
 <script setup>
 import {reactive, ref} from 'vue'
+import Alerta from "./Alerta.vue";
 
-  const paciente = reactive({
-    nombre: '',
-    propietario: '',
-    email:'',
-    alta: '',
-    sintomas: ''
+
+  const alerta = reactive({
+    tipo: '',
+    mensaje: ''
 
   })
+
+
+  defineEmits(['update:nombre'])
+
+  const validar = (e) => {
+
+    if(Object.values(paciente).includes('')){
+      alerta.mensaje = ' Todos los campos son obligatorios'
+      alerta.tipo = 'exito'
+      return
+    }
+  }
 
 </script>
 
@@ -19,12 +30,18 @@ import {reactive, ref} from 'vue'
       Añade Pacientes y <span class="text-indigo-600 font-bold">Administralos</span>
     </p>
 
+    <Alerta
+      v-if="alerta.mensaje"
+      :alerta="alerta"
+    />
 
-    <form class="bg-white shadow-md rounded-lg py-10 px-5" action="">
+
+    <form class="bg-white shadow-md rounded-lg py-10 px-5"  @submit.prevent="validar" >
       <div class="mb-5">
         <label
             for="mascota"
             class="block text-gray-700 uppercase font-bold"
+            @input="$emit('update:nombre', $event.target.value)"
         >
           Nombre de mascota
         </label>
@@ -33,7 +50,7 @@ import {reactive, ref} from 'vue'
             type="text"
             placeholder="Nombre de la mascota"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
-            v-model="paciente.nombre"
+
         >
       </div>
       <div class="mb-5">
@@ -48,7 +65,7 @@ import {reactive, ref} from 'vue'
             type="text"
             placeholder="Nombre del propetario"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
-            v-model="paciente.propietario"
+
         >
       </div>
       <div class="mb-5">
@@ -63,7 +80,7 @@ import {reactive, ref} from 'vue'
             type="email"
             placeholder="Email del propietario"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
-            v-model="paciente.email"
+
         >
       </div>
       <div class="mb-5">
@@ -77,7 +94,7 @@ import {reactive, ref} from 'vue'
             id="alta"
             type="date"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
-            v-model="paciente.alta"
+
         >
       </div>
       <div class="mb-5">
@@ -92,7 +109,7 @@ import {reactive, ref} from 'vue'
             placeholder="Describe los síntomas"
             type="date"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
-            v-model="paciente.sintomas"
+
         />
       </div>
 
