@@ -10,15 +10,45 @@ import Alerta from "./Alerta.vue";
   })
 
 
-  defineEmits(['update:nombre'])
+  defineEmits(['update:nombre','update:propietario','update:email','update:alta','update:sintomas'])
+
+
+  const props = defineProps({
+    nombre:{
+      type: String,
+      required: true
+    },
+    nombre:{
+      type: String,
+      required: true
+    },
+    email:{
+      type: String,
+      required: true
+    },
+    alta:{
+      type: String,
+      required: true
+    },
+    sintomas:{
+      type: String,
+      required: true
+    }
+
+
+  })
 
   const validar = (e) => {
 
-    if(Object.values(paciente).includes('')){
+    if(Object.values(props).includes('')){
       alerta.mensaje = ' Todos los campos son obligatorios'
       alerta.tipo = 'exito'
       return
     }
+
+    console.log('Todos los campos del formulario:', props)
+    alerta.mensaje = 'Formulario enviado correctamente'
+    alerta.tipo = 'exito'
   }
 
 </script>
@@ -41,17 +71,18 @@ import Alerta from "./Alerta.vue";
         <label
             for="mascota"
             class="block text-gray-700 uppercase font-bold"
-            @input="$emit('update:nombre', $event.target.value)"
+            
         >
-          Nombre de mascota
+          Nombre de mascota 
         </label>
         <input
             id="mascota"
             type="text"
             placeholder="Nombre de la mascota"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
-
+             @input="$emit('update:nombre', $event.target.value)"
         >
+        
       </div>
       <div class="mb-5">
         <label
@@ -65,6 +96,7 @@ import Alerta from "./Alerta.vue";
             type="text"
             placeholder="Nombre del propetario"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
+              @input="$emit('update:propietario', $event.target.value)"
 
         >
       </div>
@@ -80,6 +112,7 @@ import Alerta from "./Alerta.vue";
             type="email"
             placeholder="Email del propietario"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
+             @input="$emit('update:email', $event.target.value)"
 
         >
       </div>
@@ -94,6 +127,7 @@ import Alerta from "./Alerta.vue";
             id="alta"
             type="date"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
+            @input="$emit('update:alta', $event.target.value)"
 
         >
       </div>
@@ -109,6 +143,7 @@ import Alerta from "./Alerta.vue";
             placeholder="Describe los síntomas"
             type="date"
             class="border-2 w-full p-2 mt-3 placeholder-indigo-400 rounded-md"
+            @input="$emit('update:sintomas', $event.target.value)"
 
         />
       </div>
